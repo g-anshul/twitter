@@ -10,6 +10,11 @@
 
     <properties>
         <twitter4j.version>4.0.2</twitter4j.version>
+        <maven-compile-version>3.8.0</maven-compile-version>
+        <maven-jar-version>3.1.0</maven-jar-version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.assembly.version>2.4.1</maven.assembly.version>
     </properties>
 
     <dependencies>
@@ -19,5 +24,56 @@
             <version>${twitter4j.version}</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compile-version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-version}</version>
+            </plugin>
+
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>${maven.assembly.version}</version>
+            <configuration>
+                <!-- get all project dependencies -->
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+                <!-- MainClass in mainfest make a executable jar -->
+                <archive>
+                    <manifest>
+                        <mainClass>twitter.ReadTimeline</mainClass>
+                    </manifest>
+                </archive>
+
+            </configuration>
+            <executions>
+                <execution>
+                    <id>make-assembly</id>
+                    <!-- bind to the packaging phase -->
+                    <phase>package</phase>
+                    <goals>
+                        <goal>single</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        </plugins>
+
+    </build>
 
 </project>

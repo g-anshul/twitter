@@ -11,10 +11,9 @@ import java.util.Properties;
  */
 public class ReadTimeline {
     public static void main(String[] args) {
-
         Properties properties = new Properties();
         try {
-            InputStream inputStream = new FileInputStream("src/twitter.properties");
+            InputStream inputStream = new FileInputStream("twitter.properties");
             properties.load(inputStream);
         } catch (IOException io) {
             io.printStackTrace();
