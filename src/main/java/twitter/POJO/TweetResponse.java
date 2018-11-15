@@ -1,20 +1,18 @@
 package twitter.POJO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import twitter4j.ResponseList;
-import twitter4j.Status;
 
 import javax.ws.rs.core.Response;
 
 /**
  * Created by anshul.gupta on 11/15/18.
  */
-public class TimeLineResponse {
+public class TweetResponse {
+    private String message;
     private Response.Status status;
-    private ResponseList<Status> timeLineResponse;
 
     @JsonProperty
-    public Response.Status getStatus() {
+    private Response.Status getStatus() {
         return status;
     }
 
@@ -24,13 +22,12 @@ public class TimeLineResponse {
     }
 
     @JsonProperty
-    public ResponseList<Status> getTimeLineResponse() {
-        return timeLineResponse;
+    private String getMessage() {
+        return message;
     }
 
     @JsonProperty
-    public void setTimeLineResponse(ResponseList<Status> timeLineResponse) {
-        this.timeLineResponse = timeLineResponse;
+    public void setMessage(String message) {
+        this.message = message;
     }
-
 }

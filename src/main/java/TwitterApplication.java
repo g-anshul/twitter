@@ -14,7 +14,7 @@ public class TwitterApplication extends Application<TwitterStubConfig> {
 
     @Override
     public void run(TwitterStubConfig config, Environment env) {
-        final TwitterService personService = new TwitterService();
-        env.jersey().register(personService);
+        final TwitterService twitterService = new TwitterService();
+        env.jersey().register(twitterService);
     }
 }

@@ -1,7 +1,9 @@
-com/restapi/pojo/TwitterTweetResponse.class
 TwitterApplication.class
-com/restapi/pojo/TimeLineResponse.class
-com/restapi/config/TwitterUserAccountConfiguration.class
-com/restapi/config/TwitterConfiguration.class
-com/restapi/pojo/UserKeys.class
-com/restapi/resource/ApplicationResource.class
+twitter/Configuration/TwitterStubConfig.class
+twitter/POJO/AuthConfig.class
+twitter/POJO/TweetResponse.class
+twitter/Service/TwitterService.class
+twitter/Configuration/LoadTwitterConfig.class
+twitter/POJO/TweetMessageConfig.class
+twitter/POJO/TimeLineResponse.class
+twitter/POJO/Configuration.class

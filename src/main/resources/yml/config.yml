@@ -1,5 +1,3 @@
-tweet: this is tweet message
-
 server:
   applicationConnectors:
   - type: http

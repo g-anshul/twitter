@@ -1,4 +1,4 @@
-version: 0.0.1
+tweet: this is tweet message
 
 server:
   applicationConnectors:

@@ -10,10 +10,6 @@ import java.io.InputStream;
  * Created by anshul.gupta on 11/15/18.
  */
 public class LoadTwitterConfig {
-
-    private LoadTwitterConfig() {
-    }
-
     /***
      *
      * TODO : // read more about the below comments:
@@ -22,7 +18,7 @@ public class LoadTwitterConfig {
      *
      */
 
-    private Configuration loadConfig() {
+    public Configuration loadConfig() {
         Yaml yaml = new Yaml(new Constructor(Configuration.class));
         InputStream inputStream = LoadTwitterConfig.class.getClassLoader().getResourceAsStream("yml/tweet.yml");
         return (Configuration) yaml.load(inputStream);

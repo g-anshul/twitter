@@ -1,6 +1,7 @@
 # Compiled class file
 *.class
-
+*.iml
+.idea
 # Log file
 *.log
 
@@ -68,3 +69,4 @@ fabric.properties
 
 # *.iml
 # modules.xml
+*/target/*

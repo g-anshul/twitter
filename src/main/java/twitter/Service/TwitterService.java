@@ -5,42 +5,68 @@ package twitter.Service;
  */
 
 import com.codahale.metrics.annotation.Timed;
+import twitter.Configuration.LoadTwitterConfig;
 import twitter.POJO.AuthConfig;
+import twitter.POJO.Configuration;
 import twitter.POJO.TimeLineResponse;
+import twitter.POJO.TweetResponse;
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Collections;
 import java.util.List;
 
 @Path("/api/1.0/twitter")
+@Produces(MediaType.APPLICATION_JSON)
 public class TwitterService {
+    private String tweet;
+    Configuration loadTwitterConfig;
+    ResponseList<Status> timeLineList;
+    TimeLineResponse timeLineResponse = new TimeLineResponse();
+    Twitter twitter;
+
 
     public TwitterService() {
+        loadTwitterConfig = new LoadTwitterConfig().loadConfig();
+        twitter = new TwitterFactory().getInstance();
+        twitter.setOAuthConsumer(loadTwitterConfig.getOAuth().getOAuthConsumerKey(), loadTwitterConfig.getOAuth().getOAuthConsumerSecret());
+        AccessToken accessToken = new AccessToken(loadTwitterConfig.getOAuth().getOAuthAcessToken(), loadTwitterConfig.getOAuth().getOAuthAccessTokenSecret());
+        twitter.setOAuthAccessToken(accessToken);
     }
 
     @GET
     @Timed
     @Path("/timeline")
-    @Produces(MediaType.APPLICATION_JSON)
     public TimeLineResponse getTimeLine() {
-        List<String> timeLineList = Collections.EMPTY_LIST;
-        Twitter twitter = new TwitterFactory().getInstance();
-        AuthConfig authConfig = new AuthConfig();
-
-        twitter.setOAuthConsumer(authConfig.getOAuthConsumerKey(),authConfig.getOAuthConsumerKey());
-        AccessToken accessToken = new AccessToken(authConfig.getOAuthAcessToken(),authConfig.getOAuthAccessTokenSecret());
-
-        twitter.setOAuthAccessToken(accessToken);
-
         try {
-           timeLineList = twitter.getHomeTimeline();
+            timeLineList = twitter.getHomeTimeline();
+            if (timeLineList.size() == 0) {
+                throw new WebApplicationException("There are no messages in your timeline", Response.Status.NOT_FOUND);
+            }
+            timeLineResponse.setTimeLineResponse(timeLineList);
+            timeLineResponse.setStatus(Response.Status.OK);
+
         } catch (TwitterException e) {
             e.printStackTrace();
         }
+        return timeLineResponse;
+    }
 
-
+    @POST
+    @Timed
+    @Path("/tweet")
+    public TweetResponse tweet(@QueryParam("tweet") String tweet) {
+        TweetResponse tweetResponse = new TweetResponse();
+        try {
+            Status status = twitter.updateStatus(tweet);
+            tweetResponse.setStatus(Response.Status.CREATED);
+            tweetResponse.setMessage("New tweet has been posted to twitter handler : " + status.getText());
+        } catch (TwitterException e) {
+            throw new WebApplicationException(e.getMessage(), e.getStatusCode());
+        }
+        return tweetResponse;
     }
 }
