@@ -1,0 +1,30 @@
+package twitter.Configuration;
+
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+import twitter.POJO.Configuration;
+
+import java.io.InputStream;
+
+/**
+ * Created by anshul.gupta on 11/15/18.
+ */
+public class LoadTwitterConfig {
+
+    private LoadTwitterConfig() {
+    }
+
+    /***
+     *
+     * TODO : // read more about the below comments:
+     *              1. Why type casting is needed
+     *              2. LoadTwitterConfig.class.load is used?
+     *
+     */
+
+    private Configuration loadConfig() {
+        Yaml yaml = new Yaml(new Constructor(Configuration.class));
+        InputStream inputStream = LoadTwitterConfig.class.getClassLoader().getResourceAsStream("yml/tweet.yml");
+        return (Configuration) yaml.load(inputStream);
+    }
+}

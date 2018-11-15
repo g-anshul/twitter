@@ -1,14 +1,15 @@
-package com.restapi.pojo;
+package twitter.POJO;
 
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Created by anshul.gupta on 11/14/18.
+ * Created by anshul.gupta on 11/15/18.
  */
-@Setter
+
 @Getter
-public class UserKeys {
+@Setter
+public class AuthConfig {
     private String OAuthConsumerKey;
     private String OAuthConsumerSecret;
     private String OAuthAcessToken;
