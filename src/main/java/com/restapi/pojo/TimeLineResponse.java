@@ -1,8 +1,10 @@
 package com.restapi.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import twitter4j.ResponseList;
 import twitter4j.Status;
 
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -11,14 +13,14 @@ import java.util.List;
 public class TimeLineResponse {
 
     private List<String> timeLineResponse;
-    private Status status;
+    private Response.Status status;
 
     @JsonProperty
-    public Status getStatus(){
+    public Response.Status getStatus(){
         return status;
     }
 
-    public void setStatus(Status status){
+    public void setStatus(Response.Status status){
         this.status = status;
     }
 
@@ -27,7 +29,10 @@ public class TimeLineResponse {
         return timeLineResponse;
     }
 
-    public void setTimeLineResponse(List<String> timeLineResponse){
+    public void setTimeLineResponse(ResponseList<Status> timeLineList){
         this.timeLineResponse = timeLineResponse;
+    }
+
+    public void setStatus(Status ok) {
     }
 }

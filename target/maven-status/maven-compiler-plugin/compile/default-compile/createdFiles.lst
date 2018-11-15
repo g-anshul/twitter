@@ -1,2 +1,7 @@
-twitter/ReadTimeline.class
-twitter/PublishPost.class
+com/restapi/pojo/TwitterTweetResponse.class
+TwitterApplication.class
+com/restapi/pojo/TimeLineResponse.class
+com/restapi/config/TwitterUserAccountConfiguration.class
+com/restapi/config/TwitterConfiguration.class
+com/restapi/pojo/UserKeys.class
+com/restapi/resource/ApplicationResource.class

@@ -1,4 +1,5 @@
-import com.restapi.TwitterConfiguration;
+import com.restapi.config.TwitterConfiguration;
+import com.restapi.resource.ApplicationResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 
@@ -11,6 +12,7 @@ public class TwitterApplication extends Application<TwitterConfiguration> {
     }
     @Override
     public void run(TwitterConfiguration twitterConfiguration, Environment environment) throws Exception {
-
+        final ApplicationResource applicationResource = new ApplicationResource();
+        environment.jersey().register(applicationResource);
     }
 }
