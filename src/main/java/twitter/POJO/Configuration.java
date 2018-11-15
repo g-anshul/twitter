@@ -11,5 +11,4 @@ import lombok.Setter;
 @Setter
 public class Configuration {
     private AuthConfig OAuth;
-    private TweetMessageConfig tweetMessageConfig;
 }

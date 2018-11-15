@@ -6,7 +6,6 @@ package twitter.Service;
 
 import com.codahale.metrics.annotation.Timed;
 import twitter.Configuration.LoadTwitterConfig;
-import twitter.POJO.AuthConfig;
 import twitter.POJO.Configuration;
 import twitter.POJO.TimeLineResponse;
 import twitter.POJO.TweetResponse;
@@ -16,8 +15,6 @@ import twitter4j.auth.AccessToken;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Collections;
-import java.util.List;
 
 @Path("/api/1.0/twitter")
 @Produces(MediaType.APPLICATION_JSON)
@@ -29,6 +26,9 @@ public class TwitterService {
     Twitter twitter;
 
 
+    /*
+        ** Creating a constructor and will initialize objects and class reference.
+     */
     public TwitterService() {
         loadTwitterConfig = new LoadTwitterConfig().loadConfig();
         twitter = new TwitterFactory().getInstance();

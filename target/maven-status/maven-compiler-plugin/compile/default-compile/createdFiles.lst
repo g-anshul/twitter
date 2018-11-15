@@ -4,6 +4,5 @@ twitter/POJO/AuthConfig.class
 twitter/POJO/TweetResponse.class
 twitter/Service/TwitterService.class
 twitter/Configuration/LoadTwitterConfig.class
-twitter/POJO/TweetMessageConfig.class
 twitter/POJO/TimeLineResponse.class
 twitter/POJO/Configuration.class
