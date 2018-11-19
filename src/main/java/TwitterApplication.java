@@ -1,8 +1,7 @@
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.setup.Environment;
-import twitter.Service.TwitterService;
-import twitter.Service.TwitterServiceInterface;
+import twitter.Resources.TwitterResource;
 
 /**
  * Created by anshul.gupta on 11/15/18.
@@ -15,7 +14,7 @@ public class TwitterApplication extends Application<Configuration> {
 
     @Override
     public void run(Configuration config, Environment env) {
-        final TwitterService twitterService = new TwitterService();
-        env.jersey().register(twitterService);
+        final TwitterResource twitterResource = new TwitterResource();
+        env.jersey().register(twitterResource);
     }
 }

@@ -1,5 +1,6 @@
 package twitter.Configuration;
 
+import lombok.extern.slf4j.Slf4j;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 import twitter.POJO.Configuration;
@@ -9,6 +10,7 @@ import java.io.InputStream;
 /**
  * Created by anshul.gupta on 11/15/18.
  */
+@Slf4j
 public class LoadTwitterConfig {
     /***
      *

@@ -13,15 +13,26 @@ import java.util.stream.Collectors;
  * Created by anshul.gupta on 11/17/18.
  */
 @Slf4j
-public class TwitterServiceImpl implements TwitterServiceInterface {
+public class TwitterServiceImpl implements TwitterService {
     List<String> timeLineList;
     Twitter twitter;
 
-    public TwitterServiceImpl(){
+    private static TwitterServiceImpl twitterServiceImpl;
+
+    private TwitterServiceImpl(){
         TwitterServiceAuthImpl twitterServiceAuth = new TwitterServiceAuthImpl();
+        log.info("Calling OAuth Service for getting token");
         twitter = twitterServiceAuth.OAuthImpl();
     }
 
+    public static TwitterServiceImpl getInstance() {
+        if (twitterServiceImpl != null) {
+            return twitterServiceImpl;
+        }
+        else {
+           return new TwitterServiceImpl();
+        }
+    }
     @Override
     public TimeLineResponse getTimeLine() throws TwitterException {
         TimeLineResponse timeLineResponse = new TimeLineResponse();

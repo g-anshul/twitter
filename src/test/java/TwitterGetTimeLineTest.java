@@ -9,9 +9,8 @@
 //import org.mockito.Mockito;
 //import org.mockito.MockitoAnnotations;
 //import twitter.POJO.TimeLineResponse;
-//import twitter.Service.TwitterService;
 //import twitter.Service.TwitterServiceImpl;
-//import twitter.Service.TwitterServiceInterface;
+//import twitter.Service.TwitterService;
 //import twitter4j.Status;
 //import twitter4j.TwitterException;
 //
@@ -31,7 +30,7 @@
 //public class TwitterGetTimeLineTest {
 //
 //    @Mock
-//    TwitterServiceInterface twitterServiceInterface;
+//    TwitterService twitterService;
 //
 //    @InjectMocks
 //    TwitterServiceImpl twitterService = new TwitterServiceImpl();
