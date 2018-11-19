@@ -14,5 +14,16 @@ Run from .jar file
 b)
 "`java -jar target/twitter-1.0-SNAPSHOT-jar-with-dependencies.jar twitter.PublishPost`"
 
-*** NOTE ***
-Currently, it is using private account keys which admin has changed in order to run correct keys are not passed.
+**************** Config file ****************
+
+Before running the jar command, keys needs to be updated.
+a) Go to the command line :
+    1. OAuthConsumerKey=${You consumer keys}
+    2. OAuthConsumerSecret=${You consumer secret keys}
+    3. OAuthAcessToken=${You Access token keys}
+    4. OAuthAccessTokenSecret=${You Access secret keys}
+
+b) then run `java -jar target/twitter-1.0-SNAPSHOT-jar-with-dependencies.jar server src/main/resources/yml/config.yml`
+c) Service must be accessible over: <Use post man or rest service client for accessing below http endpoint>
+    1. http://localhost:8080/api/1.0/twitter/timeline
+    2. http://localhost:8080/api/1.0/twitter/tweet?tweet=hello this is tweet from twitter4j
