@@ -12,7 +12,7 @@ public class TweetResponse {
     private Response.Status status;
 
     @JsonProperty
-    private Response.Status getStatus() {
+    public Response.Status getStatus() {
         return status;
     }
 
@@ -22,7 +22,7 @@ public class TweetResponse {
     }
 
     @JsonProperty
-    private String getMessage() {
+    public String getMessage() {
         return message;
     }
 

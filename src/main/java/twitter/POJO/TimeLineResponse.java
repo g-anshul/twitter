@@ -5,13 +5,14 @@ import twitter4j.ResponseList;
 import twitter4j.Status;
 
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * Created by anshul.gupta on 11/15/18.
  */
 public class TimeLineResponse {
     private Response.Status status;
-    private ResponseList<Status> timeLineResponse;
+    private List<String> timeLineResponse;
 
     @JsonProperty
     public Response.Status getStatus() {
@@ -24,12 +25,12 @@ public class TimeLineResponse {
     }
 
     @JsonProperty
-    public ResponseList<Status> getTimeLineResponse() {
+    public List<String> getTimeLineResponse() {
         return timeLineResponse;
     }
 
     @JsonProperty
-    public void setTimeLineResponse(ResponseList<Status> timeLineResponse) {
+    public void setTimeLineResponse(List<String> timeLineResponse) {
         this.timeLineResponse = timeLineResponse;
     }
 

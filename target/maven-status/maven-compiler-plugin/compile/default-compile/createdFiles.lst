@@ -1,8 +1,11 @@
+twitter/Service/TwitterServiceAuthImpl.class
 TwitterApplication.class
-twitter/Configuration/TwitterStubConfig.class
+twitter/POJO/ServerConfig.class
 twitter/POJO/AuthConfig.class
 twitter/POJO/TweetResponse.class
 twitter/Service/TwitterService.class
+twitter/Service/TwitterServiceInterface.class
 twitter/Configuration/LoadTwitterConfig.class
+twitter/Service/TwitterServiceImpl.class
 twitter/POJO/TimeLineResponse.class
 twitter/POJO/Configuration.class

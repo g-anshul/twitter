@@ -2,6 +2,7 @@ import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.setup.Environment;
 import twitter.Service.TwitterService;
+import twitter.Service.TwitterServiceInterface;
 
 /**
  * Created by anshul.gupta on 11/15/18.

@@ -5,52 +5,38 @@ package twitter.Service;
  */
 
 import com.codahale.metrics.annotation.Timed;
-import twitter.Configuration.LoadTwitterConfig;
-import twitter.POJO.Configuration;
+import lombok.extern.slf4j.Slf4j;
 import twitter.POJO.TimeLineResponse;
 import twitter.POJO.TweetResponse;
 import twitter4j.*;
-import twitter4j.auth.AccessToken;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+@Slf4j
 @Path("/api/1.0/twitter")
 @Produces(MediaType.APPLICATION_JSON)
 public class TwitterService {
-    private String tweet;
-    Configuration loadTwitterConfig;
-    ResponseList<Status> timeLineList;
-    TimeLineResponse timeLineResponse = new TimeLineResponse();
-    Twitter twitter;
+    private TwitterServiceInterface twitterServiceInterface;
 
-
-    /*
-        ** Creating a constructor and will initialize objects and class reference.
-     */
     public TwitterService() {
-        loadTwitterConfig = new LoadTwitterConfig().loadConfig();
-        twitter = new TwitterFactory().getInstance();
-        twitter.setOAuthConsumer(loadTwitterConfig.getOAuth().getOAuthConsumerKey(), loadTwitterConfig.getOAuth().getOAuthConsumerSecret());
-        AccessToken accessToken = new AccessToken(loadTwitterConfig.getOAuth().getOAuthAcessToken(), loadTwitterConfig.getOAuth().getOAuthAccessTokenSecret());
-        twitter.setOAuthAccessToken(accessToken);
+        twitterServiceInterface = new TwitterServiceImpl();
     }
 
     @GET
     @Timed
     @Path("/timeline")
     public TimeLineResponse getTimeLine() {
+        TimeLineResponse timeLineResponse = new TimeLineResponse();
         try {
-            timeLineList = twitter.getHomeTimeline();
-            if (timeLineList.size() == 0) {
-                throw new WebApplicationException("There are no messages in your timeline", Response.Status.NOT_FOUND);
+            timeLineResponse = twitterServiceInterface.getTimeLine();
+            if (timeLineResponse.getStatus().equals(Response.Status.OK)) {
+                log.info("Got timeLine Response: " + timeLineResponse.getStatus());
+                return timeLineResponse;
             }
-            timeLineResponse.setTimeLineResponse(timeLineList);
-            timeLineResponse.setStatus(Response.Status.OK);
-
         } catch (TwitterException e) {
-            e.printStackTrace();
+            log.error("Error getting timeline data : " + e.getErrorMessage());
         }
         return timeLineResponse;
     }
@@ -58,14 +44,15 @@ public class TwitterService {
     @POST
     @Timed
     @Path("/tweet")
-    public TweetResponse tweet(@QueryParam("tweet") String tweet) {
+    public TweetResponse tweet(@DefaultValue("") @QueryParam("tweet") String tweet) {
         TweetResponse tweetResponse = new TweetResponse();
         try {
-            Status status = twitter.updateStatus(tweet);
-            tweetResponse.setStatus(Response.Status.CREATED);
-            tweetResponse.setMessage("New tweet has been posted to twitter handler : " + status.getText());
+            tweetResponse = twitterServiceInterface.postTweetMessage(tweet);
+            if (tweetResponse.getStatus().equals(Response.Status.CREATED)) {
+                log.info("Tweeted on twitter handler " + tweetResponse.getStatus().getStatusCode());
+            }
         } catch (TwitterException e) {
-            throw new WebApplicationException(e.getMessage(), e.getStatusCode());
+            log.error(e.getErrorMessage());
         }
         return tweetResponse;
     }
