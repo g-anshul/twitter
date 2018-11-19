@@ -1,4 +1,4 @@
-package twitter.POJO;
+package twitter.POJO.RequestPojo;
 
 import lombok.Getter;
 import lombok.Setter;

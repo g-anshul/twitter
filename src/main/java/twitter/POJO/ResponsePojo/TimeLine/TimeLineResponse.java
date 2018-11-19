@@ -1,4 +1,4 @@
-package twitter.POJO;
+package twitter.POJO.ResponsePojo.TimeLine;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import twitter4j.ResponseList;

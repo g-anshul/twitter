@@ -1,7 +1,7 @@
 package twitter.Service;
 
-import twitter.POJO.TimeLineResponse;
-import twitter.POJO.TweetResponse;
+import twitter.POJO.ResponsePojo.TimeLine.TimeLineResponse;
+import twitter.POJO.ResponsePojo.TweetMessage.TweetResponse;
 import twitter4j.TwitterException;
 
 /**

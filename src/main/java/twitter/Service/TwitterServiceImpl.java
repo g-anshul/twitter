@@ -1,8 +1,9 @@
 package twitter.Service;
 
 import lombok.extern.slf4j.Slf4j;
-import twitter.POJO.TimeLineResponse;
-import twitter.POJO.TweetResponse;
+import twitter.POJO.ResponsePojo.TimeLine.TimeLineResponse;
+import twitter.POJO.ResponsePojo.TweetMessage.TweetResponse;
+import twitter.POJO.ResponsePojo.TweetMessage.User;
 import twitter4j.*;
 
 import javax.ws.rs.core.Response;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class TwitterServiceImpl implements TwitterService {
-    List<String> timeLineList;
+
     Twitter twitter;
 
     private static TwitterServiceImpl twitterServiceImpl;
@@ -35,6 +36,7 @@ public class TwitterServiceImpl implements TwitterService {
     }
     @Override
     public TimeLineResponse getTimeLine() throws TwitterException {
+        List<String> timeLineList;
         TimeLineResponse timeLineResponse = new TimeLineResponse();
         try {
             timeLineList = twitter.getHomeTimeline().stream().map(Status::getText).collect(Collectors.toList());
@@ -50,12 +52,17 @@ public class TwitterServiceImpl implements TwitterService {
     @Override
     public TweetResponse postTweetMessage(String tweet) throws TwitterException {
         TweetResponse tweetResponse = new TweetResponse();
+        User user = new User();
         try {
             Status status = twitter.updateStatus(tweet);
             tweetResponse.setStatus(Response.Status.CREATED);
             tweetResponse.setMessage("New tweet has been posted to twitter handler : " + status.getText());
+            tweetResponse.setCreatedAt(status.getCreatedAt());
+            user.setName(status.getUser().getName());
+            user.setProfileImageUrl(status.getUser().getProfileImageURL());
+            tweetResponse.setUser(user);
         } catch (TwitterException e) {
-            log.error("Unable to twet :: " + e.getErrorMessage());
+            log.error("Unable to tweet :: " + e.getErrorMessage());
             throw new TwitterException(e);
         }
 

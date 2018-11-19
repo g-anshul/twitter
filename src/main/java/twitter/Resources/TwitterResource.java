@@ -6,8 +6,8 @@ package twitter.Resources;
 
 import com.codahale.metrics.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
-import twitter.POJO.TimeLineResponse;
-import twitter.POJO.TweetResponse;
+import twitter.POJO.ResponsePojo.TimeLine.TimeLineResponse;
+import twitter.POJO.ResponsePojo.TweetMessage.TweetResponse;
 import twitter.Service.TwitterServiceImpl;
 import twitter.Service.TwitterService;
 import twitter4j.*;
@@ -54,7 +54,8 @@ public class TwitterResource {
                 log.info("Tweeted on twitter handler " + tweetResponse.getStatus().getStatusCode());
             }
         } catch (TwitterException e) {
-            log.error(e.getErrorMessage());
+            log.error(e.getMessage());
+            tweetResponse.setMessage(e.getMessage());
         }
         return tweetResponse;
     }
