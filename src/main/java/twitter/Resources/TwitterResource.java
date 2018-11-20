@@ -29,10 +29,10 @@ public class TwitterResource {
     @GET
     @Timed
     @Path("/timeline")
-    public TimeLineResponse getTimeLine() {
+    public TimeLineResponse getTimeLine(@DefaultValue("") @QueryParam("messageFilter") String messageFilter ) {
         TimeLineResponse timeLineResponse = new TimeLineResponse();
         try {
-            timeLineResponse = twitterService.getTimeLine();
+            timeLineResponse = twitterService.getTimeLine(messageFilter);
             if (timeLineResponse.getStatus().equals(Response.Status.OK)) {
                 log.info("Got timeLine Response: " + timeLineResponse.getStatus());
                 return timeLineResponse;

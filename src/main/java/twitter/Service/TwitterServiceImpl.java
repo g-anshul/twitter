@@ -35,11 +35,11 @@ public class TwitterServiceImpl implements TwitterService {
         }
     }
     @Override
-    public TimeLineResponse getTimeLine() throws TwitterException {
+    public TimeLineResponse getTimeLine(String messageFilter) throws TwitterException {
         List<String> timeLineList;
         TimeLineResponse timeLineResponse = new TimeLineResponse();
         try {
-            timeLineList = twitter.getHomeTimeline().stream().map(Status::getText).collect(Collectors.toList());
+            timeLineList = twitter.getHomeTimeline().stream().map(Status::getText).filter(text -> text.contains(messageFilter)).collect(Collectors.toList());
             timeLineResponse.setTimeLineResponse(timeLineList);
             timeLineResponse.setStatus(Response.Status.OK);
         } catch (TwitterException e) {
