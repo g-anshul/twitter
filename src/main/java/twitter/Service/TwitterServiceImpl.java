@@ -8,7 +8,6 @@ import twitter.POJO.ResponsePojo.TweetMessage.TweetResponse;
 import twitter.POJO.ResponsePojo.TweetMessage.User;
 import twitter4j.*;
 
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,19 +19,14 @@ import java.util.stream.Collectors;
 @Service
 public class TwitterServiceImpl implements TwitterService {
 
-    Twitter twitter;
+    private Twitter twitter;
 
     @Autowired
-    TwitterServiceImpl twitterServiceImpl;
-
-    private TwitterServiceImpl() {
-        TwitterServiceAuthImpl twitterServiceAuth = new TwitterServiceAuthImpl();
-        log.info("Calling OAuth Service for getting token");
-        twitter = twitterServiceAuth.OAuthImpl();
-    }
+    TwitterServiceAuthImpl twitterServiceAuthImpl;
 
     @Override
     public TimeLineResponse getTimeLine(String messageFilter) throws TwitterException {
+        twitter = twitterServiceAuthImpl.OAuthImpl();
         List<String> timeLineList;
         TimeLineResponse timeLineResponse = new TimeLineResponse();
         try {
@@ -48,6 +42,7 @@ public class TwitterServiceImpl implements TwitterService {
 
     @Override
     public TweetResponse postTweetMessage(String tweet) throws TwitterException {
+        twitter = twitterServiceAuthImpl.OAuthImpl();
         TweetResponse tweetResponse = new TweetResponse();
         User user = new User();
         try {

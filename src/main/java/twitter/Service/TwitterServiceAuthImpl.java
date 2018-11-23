@@ -1,6 +1,7 @@
 package twitter.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import twitter.Configuration.LoadTwitterConfig;
 import twitter.POJO.Configuration;
 import twitter4j.Twitter;
@@ -11,9 +12,14 @@ import twitter4j.auth.AccessToken;
  * Created by anshul.gupta on 11/16/18.
  */
 @Slf4j
+@Component
 public class TwitterServiceAuthImpl {
-    Configuration loadTwitterConfig;
+    private Configuration loadTwitterConfig;
     Twitter twitter;
+
+    public TwitterServiceAuthImpl() {
+        OAuthImpl();
+    }
 
     public Twitter OAuthImpl() {
         loadTwitterConfig = new LoadTwitterConfig().loadConfig();

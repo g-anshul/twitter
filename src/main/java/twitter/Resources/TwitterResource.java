@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import twitter.POJO.ResponsePojo.TimeLine.TimeLineResponse;
 import twitter.POJO.ResponsePojo.TweetMessage.TweetResponse;
-import twitter.Service.TwitterServiceImpl;
 import twitter.Service.TwitterService;
 import twitter4j.*;
 

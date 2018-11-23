@@ -1,6 +1,5 @@
 package twitter.Service;
 
-import org.springframework.stereotype.Component;
 import twitter.POJO.ResponsePojo.TimeLine.TimeLineResponse;
 import twitter.POJO.ResponsePojo.TweetMessage.TweetResponse;
 import twitter4j.TwitterException;
