@@ -1,7 +1,11 @@
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
+import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import twitter.Resources.TwitterResource;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import javax.ws.rs.Path;
+import java.util.Map;
 
 /**
  * Created by anshul.gupta on 11/15/18.
@@ -13,8 +17,17 @@ public class TwitterApplication extends Application<Configuration> {
     }
 
     @Override
-    public void run(Configuration config, Environment env) {
-        final TwitterResource twitterResource = new TwitterResource();
-        env.jersey().register(twitterResource);
+    public void initialize(Bootstrap<Configuration> bootstrap) {
+    }
+
+    @Override
+    public void run(Configuration config, Environment environment) {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("app-config.xml");
+        context.start();
+        //context.getBeanFactory().registerSingleton("configuration",config);
+        Map<String, Object> resources = context.getBeansWithAnnotation(Path.class);
+        for (Map.Entry<String, Object> entry : resources.entrySet()) {
+            environment.jersey().register(entry.getValue());
+        }
     }
 }

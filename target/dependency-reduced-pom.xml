@@ -121,6 +121,13 @@
       <version>3.11.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-framework-bom</artifactId>
+      <version>5.1.2.RELEASE</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
   </dependencies>
   <properties>
     <lombok.version>1.18.2</lombok.version>

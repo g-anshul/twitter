@@ -1,11 +1,14 @@
 package twitter.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import twitter.POJO.ResponsePojo.TimeLine.TimeLineResponse;
 import twitter.POJO.ResponsePojo.TweetMessage.TweetResponse;
 import twitter.POJO.ResponsePojo.TweetMessage.User;
 import twitter4j.*;
 
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,26 +17,20 @@ import java.util.stream.Collectors;
  * Created by anshul.gupta on 11/17/18.
  */
 @Slf4j
+@Service
 public class TwitterServiceImpl implements TwitterService {
 
     Twitter twitter;
 
-    private static TwitterServiceImpl twitterServiceImpl;
+    @Autowired
+    TwitterServiceImpl twitterServiceImpl;
 
-    private TwitterServiceImpl(){
+    private TwitterServiceImpl() {
         TwitterServiceAuthImpl twitterServiceAuth = new TwitterServiceAuthImpl();
         log.info("Calling OAuth Service for getting token");
         twitter = twitterServiceAuth.OAuthImpl();
     }
 
-    public static TwitterServiceImpl getInstance() {
-        if (twitterServiceImpl != null) {
-            return twitterServiceImpl;
-        }
-        else {
-           return new TwitterServiceImpl();
-        }
-    }
     @Override
     public TimeLineResponse getTimeLine(String messageFilter) throws TwitterException {
         List<String> timeLineList;

@@ -6,6 +6,8 @@ package twitter.Resources;
 
 import com.codahale.metrics.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import twitter.POJO.ResponsePojo.TimeLine.TimeLineResponse;
 import twitter.POJO.ResponsePojo.TweetMessage.TweetResponse;
 import twitter.Service.TwitterServiceImpl;
@@ -19,12 +21,11 @@ import javax.ws.rs.core.Response;
 @Slf4j
 @Path("/api/1.0/twitter")
 @Produces(MediaType.APPLICATION_JSON)
+@Component
 public class TwitterResource {
-    private TwitterService twitterService;
 
-    public TwitterResource() {
-        twitterService = TwitterServiceImpl.getInstance();
-    }
+    @Autowired
+    private TwitterService twitterService;
 
     @GET
     @Timed

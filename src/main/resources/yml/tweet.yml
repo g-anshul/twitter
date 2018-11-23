@@ -1,5 +1,5 @@
 OAuth:
-  OAuthConsumerKey: ${OAuthConsumerKey}
-  OAuthConsumerSecret: ${OAuthConsumerSecret}
-  OAuthAcessToken: ${OAuthAcessToken}
-  OAuthAccessTokenSecret: ${OAuthAccessTokenSecret}
+  OAuthConsumerKey:
+  OAuthConsumerSecret:
+  OAuthAcessToken:
+  OAuthAccessTokenSecret:
