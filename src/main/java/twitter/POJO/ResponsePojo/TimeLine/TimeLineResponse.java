@@ -5,6 +5,7 @@ import twitter4j.ResponseList;
 import twitter4j.Status;
 
 import javax.ws.rs.core.Response;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,5 +34,5 @@ public class TimeLineResponse {
     public void setTimeLineResponse(List<String> timeLineResponse) {
         this.timeLineResponse = timeLineResponse;
     }
-
 }
+

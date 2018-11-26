@@ -3,6 +3,9 @@ package twitter.Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import twitter.Caching.RedisTableEnum;
+import twitter.Caching.RedisUtil;
+import twitter.Caching.TimeLineCacheImpl;
 import twitter.POJO.ResponsePojo.TimeLine.TimeLineResponse;
 import twitter.POJO.ResponsePojo.TweetMessage.TweetResponse;
 import twitter.POJO.ResponsePojo.TweetMessage.User;
@@ -20,19 +23,34 @@ import java.util.stream.Collectors;
 public class TwitterServiceImpl implements TwitterService {
 
     private Twitter twitter;
-
     @Autowired
     TwitterServiceAuthImpl twitterServiceAuthImpl;
+    @Autowired
+    TimeLineCacheImpl timeLineCache;
+    @Autowired
+    private RedisUtil redisUtilTimeLine;
 
     @Override
+    //@Cacheable(value = "Status", unless = "#result != null")
     public TimeLineResponse getTimeLine(String messageFilter) throws TwitterException {
         twitter = twitterServiceAuthImpl.OAuthImpl();
         List<String> timeLineList;
         TimeLineResponse timeLineResponse = new TimeLineResponse();
+        RedisTableEnum.TableEnum tableEnum = RedisTableEnum.TableEnum.TABLE_TIMELINE;
         try {
-            timeLineList = twitter.getHomeTimeline().stream().map(Status::getText).filter(text -> text.contains(messageFilter)).collect(Collectors.toList());
+            log.info("!!!!! Fetching from timeline !!!!!!");
+            timeLineList = (List<String>) redisUtilTimeLine.getValue(String.valueOf(tableEnum));
+            if (timeLineList != null) {
+                log.info("!!!! Got response from redis cache!!!");
+                timeLineResponse.setTimeLineResponse(timeLineList);
+            } else {
+                log.info(" !!!! Calling Twitter, no response found in redis !!!!!!");
+                timeLineList = twitter.getHomeTimeline().stream().map(Status::getText).filter(text -> text.contains(messageFilter)).collect(Collectors.toList());
+            }
             timeLineResponse.setTimeLineResponse(timeLineList);
             timeLineResponse.setStatus(Response.Status.OK);
+            timeLineCache.cacheTimeLineResponse(timeLineResponse);
+            log.info(" Returning from getTimeLine service impl !!!!!!");
         } catch (TwitterException e) {
             log.error("Unable to get time data :: " + e.getErrorMessage());
             throw new TwitterException(e);
