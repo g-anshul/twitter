@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class TimeLineResponse {
     private Response.Status status;
-    private List<String> timeLineResponse;
+    private List<TimeLineSet> timeLineSet;
 
     @JsonProperty
     public Response.Status getStatus() {
@@ -23,16 +23,18 @@ public class TimeLineResponse {
     @JsonProperty
     public void setStatus(Response.Status status) {
         this.status = status;
+
     }
 
     @JsonProperty
-    public List<String> getTimeLineResponse() {
-        return timeLineResponse;
+    public void setTimeLineSet(List<TimeLineSet> timeLineSet) {
+        this.timeLineSet = timeLineSet;
     }
 
-    @JsonProperty
-    public void setTimeLineResponse(List<String> timeLineResponse) {
-        this.timeLineResponse = timeLineResponse;
+    public List<TimeLineSet> getTimeLineSet() {
+        return timeLineSet;
     }
 }
+
+
 

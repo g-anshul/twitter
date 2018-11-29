@@ -1,5 +1,7 @@
 package twitter.Service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,13 +9,13 @@ import twitter.Caching.RedisTableEnum;
 import twitter.Caching.RedisUtil;
 import twitter.Caching.TimeLineCacheImpl;
 import twitter.POJO.ResponsePojo.TimeLine.TimeLineResponse;
+import twitter.POJO.ResponsePojo.TimeLine.TimeLineSet;
 import twitter.POJO.ResponsePojo.TweetMessage.TweetResponse;
 import twitter.POJO.ResponsePojo.TweetMessage.User;
 import twitter4j.*;
 
 import javax.ws.rs.core.Response;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * Created by anshul.gupta on 11/17/18.
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class TwitterServiceImpl implements TwitterService {
+    RedisTableEnum.TableEnum tableEnum = RedisTableEnum.TableEnum.TABLE_TIMELINE;
 
     private Twitter twitter;
     @Autowired
@@ -31,23 +34,25 @@ public class TwitterServiceImpl implements TwitterService {
     private RedisUtil redisUtilTimeLine;
 
     @Override
-    //@Cacheable(value = "Status", unless = "#result != null")
     public TimeLineResponse getTimeLine(String messageFilter) throws TwitterException {
         twitter = twitterServiceAuthImpl.OAuthImpl();
-        List<String> timeLineList;
         TimeLineResponse timeLineResponse = new TimeLineResponse();
-        RedisTableEnum.TableEnum tableEnum = RedisTableEnum.TableEnum.TABLE_TIMELINE;
+        List<TimeLineSet> timeLineSets = new ArrayList<>();
+
         try {
-            log.info("!!!!! Fetching from timeline !!!!!!");
-            timeLineList = (List<String>) redisUtilTimeLine.getValue(String.valueOf(tableEnum));
-            if (timeLineList != null) {
+            Gson gson = new GsonBuilder().create();
+            timeLineResponse = gson.fromJson(redisUtilTimeLine.getValue(String.valueOf(tableEnum)).toString(), TimeLineResponse.class);
+
+            if (timeLineResponse.getTimeLineSet().size() > 0) {
                 log.info("!!!! Got response from redis cache!!!");
-                timeLineResponse.setTimeLineResponse(timeLineList);
+                return timeLineResponse;
             } else {
                 log.info(" !!!! Calling Twitter, no response found in redis !!!!!!");
-                timeLineList = twitter.getHomeTimeline().stream().map(Status::getText).filter(text -> text.contains(messageFilter)).collect(Collectors.toList());
+                for (Status status : twitter.getHomeTimeline()) {
+                    timeLineSets.add(new TimeLineSet(status.getCreatedAt(), status.getId(), status.getUser().getProfileImageURL(), status.getText()));
+                }
             }
-            timeLineResponse.setTimeLineResponse(timeLineList);
+            timeLineResponse.setTimeLineSet(timeLineSets);
             timeLineResponse.setStatus(Response.Status.OK);
             timeLineCache.cacheTimeLineResponse(timeLineResponse);
             log.info(" Returning from getTimeLine service impl !!!!!!");
@@ -57,6 +62,7 @@ public class TwitterServiceImpl implements TwitterService {
         }
         return timeLineResponse;
     }
+
 
     @Override
     public TweetResponse postTweetMessage(String tweet) throws TwitterException {
@@ -75,7 +81,6 @@ public class TwitterServiceImpl implements TwitterService {
             log.error("Unable to tweet :: " + e.getErrorMessage());
             throw new TwitterException(e);
         }
-
         return tweetResponse;
     }
 }
