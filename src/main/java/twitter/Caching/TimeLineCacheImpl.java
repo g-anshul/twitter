@@ -23,6 +23,6 @@ public class TimeLineCacheImpl implements TimeLineCacheInterface {
         String date = String.valueOf(System.currentTimeMillis());
         RedisTableEnum.TableEnum redisTableEnum = RedisTableEnum.TableEnum.TABLE_TIMELINE;
         redisUtilTimeLine.putValue(String.valueOf(redisTableEnum), timeLineResponse.getTimeLineResponse());
-        redisUtilTimeLine.setExpire(String.valueOf(redisTableEnum), 10, TimeUnit.SECONDS);
+        redisUtilTimeLine.setExpire(String.valueOf(redisTableEnum), 600, TimeUnit.MINUTES);
     }
 }

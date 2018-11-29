@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 
 @Slf4j
 @Path("/api/1.0/twitter")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
 @Component
 public class TwitterResource {
 
