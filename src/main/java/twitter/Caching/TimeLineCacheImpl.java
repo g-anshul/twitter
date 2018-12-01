@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Component
 public class TimeLineCacheImpl implements TimeLineCacheInterface {
-    int defaultTimeout = 600;
+    int defaultTimeout = 1;
 
     @Autowired
     private RedisUtil redisUtilTimeLine;

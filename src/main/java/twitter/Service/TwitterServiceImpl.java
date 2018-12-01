@@ -41,15 +41,13 @@ public class TwitterServiceImpl implements TwitterService {
 
         try {
             Gson gson = new GsonBuilder().create();
-            timeLineResponse = gson.fromJson(redisUtilTimeLine.getValue(String.valueOf(tableEnum)).toString(), TimeLineResponse.class);
-
-            if (timeLineResponse.getTimeLineSet().size() > 0) {
-                log.info("!!!! Got response from redis cache!!!");
+            if (redisUtilTimeLine.getValue(String.valueOf(tableEnum)) != null) {
+                timeLineResponse = gson.fromJson(redisUtilTimeLine.getValue(String.valueOf(tableEnum)).toString(), TimeLineResponse.class);
                 return timeLineResponse;
             } else {
                 log.info(" !!!! Calling Twitter, no response found in redis !!!!!!");
                 for (Status status : twitter.getHomeTimeline()) {
-                    timeLineSets.add(new TimeLineSet(status.getCreatedAt(), status.getId(), status.getUser().getProfileImageURL(), status.getText()));
+                    timeLineSets.add(new TimeLineSet(status.getCreatedAt(), status.getId(), status.getUser().getProfileImageURL(),status.getUser().getURL(), status.getText()));
                 }
             }
             timeLineResponse.setTimeLineSet(timeLineSets);

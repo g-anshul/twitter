@@ -2,7 +2,6 @@ package twitter.POJO.ResponsePojo.TimeLine;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.ws.rs.core.Response;
 import java.util.Date;
 
 /**
@@ -13,12 +12,14 @@ public class TimeLineSet {
     private Long timeLineResponseId;
     private String timeLineProfileImageUrl;
     private String timelineResponse;
+    private String Url;
 
 
-    public TimeLineSet(Date timelineResponseDate, Long timeLineResponseId, String timeLineProfileImageUrl, String timelineResponse) {
+    public TimeLineSet(Date timelineResponseDate, Long timeLineResponseId, String timeLineProfileImageUrl, String Url, String timelineResponse) {
         this.timelineResponseDate = timelineResponseDate;
         this.timeLineResponseId = timeLineResponseId;
         this.timeLineProfileImageUrl = timeLineProfileImageUrl;
+        this.Url = Url;
         this.timelineResponse = timelineResponse;
     }
 
@@ -57,5 +58,15 @@ public class TimeLineSet {
     public void setTimelineResponse(String timelineResponse) {
         this.timelineResponse = timelineResponse;
     }
+
+    @JsonProperty
+    public String getUrl() {
+        return Url;
+    }
+
+    public void setUrl(String Url) {
+        this.Url = Url;
+    }
+
 
 }

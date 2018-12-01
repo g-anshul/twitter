@@ -1,5 +1,5 @@
 OAuth:
-  OAuthConsumerKey: Htfqvlg9ITjdF3rDwztr6Z4sn
-  OAuthConsumerSecret: eyxcvSVF2arAsoW35xnohUZty8HFf13dYFlaWS0AxM4hefqYRD
-  OAuthAcessToken: 771800720-HckI4tfIJa9sjzy48Q8J2BbAA1suWXV2XcrHxeBO
-  OAuthAccessTokenSecret: 9B1JyLvPP215MDmutalJV3r4SmS2TwSVSRPuJAstUdJQL
+  OAuthConsumerKey: ${OAuthConsumerKey}
+  OAuthConsumerSecret: ${OAuthConsumerSecret}
+  OAuthAcessToken: ${OAuthAcessToken}
+  OAuthAccessTokenSecret: ${OAuthAccessTokenSecret}

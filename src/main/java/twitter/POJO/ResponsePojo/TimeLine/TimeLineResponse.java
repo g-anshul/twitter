@@ -1,11 +1,8 @@
 package twitter.POJO.ResponsePojo.TimeLine;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import twitter4j.ResponseList;
-import twitter4j.Status;
 
 import javax.ws.rs.core.Response;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,7 +20,6 @@ public class TimeLineResponse {
     @JsonProperty
     public void setStatus(Response.Status status) {
         this.status = status;
-
     }
 
     @JsonProperty
