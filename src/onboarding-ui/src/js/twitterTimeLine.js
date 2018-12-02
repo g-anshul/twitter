@@ -16,7 +16,7 @@ function GetTimeLine(){
         timeLineResponse += '<th>' + "Date" + '</th>';
         timeLineResponse += '<th>' + "ID" + '</th>';
         timeLineResponse += '<th>' + "ProfileImageUrl" + '</th>';
-        timeLineResponse += '<th>' + "TimeLine Tweet Message" + '</th>';
+        timeLineResponse += '<th>' + "Tweet Message" + '</th>';
         timeLineResponse += '<th>' + "Profile URL" + '</th>';
         timeLineResponse += '</tr>';
         timeLineResponse += '</thead>';
