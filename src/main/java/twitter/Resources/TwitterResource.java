@@ -16,6 +16,7 @@ import twitter4j.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Collections;
 
 @Slf4j
 @Path("/api/1.0/twitter")
@@ -25,6 +26,9 @@ public class TwitterResource {
 
     @Autowired
     private TwitterService twitterService;
+
+    public TwitterResource(TwitterService twitterService) {
+    }
 
     @GET
     @Timed
@@ -39,6 +43,8 @@ public class TwitterResource {
             }
         } catch (TwitterException e) {
             log.error("Error getting timeline data : " + e.getErrorMessage());
+            timeLineResponse.setStatus(Response.Status.BAD_REQUEST);
+            timeLineResponse.setTimeLineSet(Collections.EMPTY_LIST);
         }
         return timeLineResponse;
     }
@@ -55,6 +61,7 @@ public class TwitterResource {
             }
         } catch (TwitterException e) {
             log.error(e.getMessage());
+            tweetResponse.setStatus(Response.Status.FORBIDDEN);
             tweetResponse.setMessage(e.getMessage());
         }
         return tweetResponse;
